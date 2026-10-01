@@ -1,0 +1,1 @@
+jupyter nbconvert --to python назва_файлу.ipynb перетворити файл .ipynb в .py
