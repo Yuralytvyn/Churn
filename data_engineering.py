@@ -12,7 +12,7 @@ import numpy as np
 
 
 df = pd.read_csv("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
-df1 = pd.read_csv("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
+df
 
 
 # In[3]:
@@ -21,179 +21,31 @@ df1 = pd.read_csv("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
 df.dtypes
 
 
+# ## Converting Columns to Numeric Format
+
 # In[4]:
 
 
-df["PaymentMethod"].unique()
+for col in df:
+    if df[col].dtype == "str":
+        df[col] = df[col].astype("category").cat.codes
 
 
-# ## Converting Columns to Numeric Format
+# ## Data analysis
 
 # In[5]:
 
 
-df["id"] = range(len(df))
+df.isna().sum()
 
 
 # In[6]:
 
 
-df["gender"] = df["gender"].map({
-    "Female": 0,
-    "Male": 1
-})
+df.corr()["Churn"]
 
 
 # In[7]:
-
-
-df["Partner"] = df["Partner"].map({
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[8]:
-
-
-df["Dependents"] = df["Dependents"].map({
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[9]:
-
-
-df["PhoneService"] = df["PhoneService"].map({
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[10]:
-
-
-df["MultipleLines"] = df["MultipleLines"].map({
-    "No phone service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[11]:
-
-
-df["InternetService"] = df["InternetService"].map({
-    "DSL":2,
-    "Fiber optic": 1,
-    "No": 0
-})
-
-
-# In[12]:
-
-
-df["OnlineSecurity"] = df["OnlineSecurity"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[13]:
-
-
-df["OnlineBackup"] = df["OnlineBackup"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[14]:
-
-
-df["DeviceProtection"] = df["DeviceProtection"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[15]:
-
-
-df["TechSupport"] = df["TechSupport"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[16]:
-
-
-df["StreamingTV"] = df["StreamingTV"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[17]:
-
-
-df["StreamingMovies"] = df["StreamingMovies"].map({
-    "No internet service":2,
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[18]:
-
-
-df["Contract"] = df["Contract"].map({
-    "Month-to-month":2,
-    "Two year": 1,
-    "One year": 0
-})
-
-
-# In[19]:
-
-
-df["PaperlessBilling"] = df["PaperlessBilling"].map({
-    "Yes": 1,
-    "No": 0
-})
-
-
-# In[19]:
-
-
-
-
-
-# In[3]:
-
-
-import pandas as pd
-df1 = pd.read_csv("data/WA_Fn-UseC_-Telco-Customer-Churn.csv")
-for col in df1:
-    if df1[col].dtype == "str":
-        df1[col] = df1[col].astype("category").cat.codes
-df1
-
-
-# In[8]:
-
-
-df1.corr()["Churn"]
-
-
-# In[5]:
 
 
 import seaborn as sns
@@ -201,7 +53,7 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=(12, 8))
 
 sns.heatmap(
-    df1.corr(),
+    df.corr(),
     annot=True,
     cmap="coolwarm",
     fmt=".2f"
@@ -210,25 +62,32 @@ sns.heatmap(
 plt.show()
 
 
-# In[21]:
+# In[8]:
 
 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+correlation = df.corr(numeric_only=True)["Churn"].sort_values(ascending=False)
+
+sns.heatmap(
+    correlation.to_frame(),
+    annot=True,
+    cmap="coolwarm"
+)
+
+plt.show()
 
 
+# ## Data engineering
 
-# In[21]:
-
-
-
+# In[9]:
 
 
-# In[21]:
+df = df.drop(columns=["customerID"])
 
 
-
-
-
-# In[21]:
+# In[9]:
 
 
 
