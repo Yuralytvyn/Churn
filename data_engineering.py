@@ -7,7 +7,6 @@
 import pandas as pd
 import numpy as np
 
-
 # In[2]:
 
 
@@ -50,14 +49,10 @@ df.corr()["Churn"]
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+
 plt.figure(figsize=(12, 8))
 
-sns.heatmap(
-    df.corr(),
-    annot=True,
-    cmap="coolwarm",
-    fmt=".2f"
-)
+sns.heatmap(df.corr(), annot=True, cmap="coolwarm", fmt=".2f")
 
 plt.show()
 
@@ -70,11 +65,7 @@ import matplotlib.pyplot as plt
 
 correlation = df.corr(numeric_only=True)["Churn"].sort_values(ascending=False)
 
-sns.heatmap(
-    correlation.to_frame(),
-    annot=True,
-    cmap="coolwarm"
-)
+sns.heatmap(correlation.to_frame(), annot=True, cmap="coolwarm")
 
 plt.show()
 
@@ -88,7 +79,3 @@ df = df.drop(columns=["customerID"])
 
 
 # In[9]:
-
-
-
-
